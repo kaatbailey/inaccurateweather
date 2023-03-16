@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>InAccurate Weather</title>
+  <!-- CSS styles go here -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" integrity="sha384-8MxflzDK3q3kLGMb/44W8vaFJspBNZqPH3ZqqYlGk8zydD2QyOB0wV7A1BZ0dCr+" crossorigin="anonymous">
+  <style>
+    .search {
+      margin-top: 20px;
+    }
+    .card {
+      border: 1px solid black;
+      border-radius: 5px;
+      padding: 10px;
+      margin: 10px;
+      max-width: 400px;
+      text-align: center;
+      font-size: 18px;
+      font-family: Arial, sans-serif;
+    }
+
+    .card img {
+      max-width: 100px;
+      margin: 10px;
+    }
+
+    .card h2 {
+      margin: 0;
+      font-size: 24px;
+    }
+
+    .card p {
+      margin: 10px 0;
+    }
+
+  </style>
+</head>
+<body>
+<div class="container">
+  <h1>InAccurate Weather App</h1>
+  <form th:action="@{/weather}" method="get" class="search">
+    <label for="zipCode">Zip Code:</label>
+    <input type="text" id="zipCode" name="zipCode" required th:value="${zipCode}">
+    <button type="submit">Search</button>
+  </form>
+  <div class="card">
+    <p>Location: <span th:text="${name}"></span></p>
+    <p>Current Temperature: <span th:text="${temp}"></span></p>
+    <p>Feels Like: <span th:text="${feelsLike}"></span></p>
+    <p>Pressure: <span th:text="${pressure}"></span></p>
+    <p>Humidity: <span th:text="${humidity}"></span></p>
+    <p>Wind Speed: <span th:text="${windSpeed}"></span></p>
+    <p>Wind Direction: <span th:text="${windDirection}"></span></p>
+    <p>Visibility: <span th:text="${visibility}"></span></p>
+    <p>Cloudiness: <span th:text="${cloudiness}"></span></p>
+    <p>Latitude: <span th:text="${lat}"></span></p>
+    <p>Longitude: <span th:text="${lon}"></span></p>
+    <p>Sunrise Time: <span th:text="${#dates.format(new java.util.Date(sunriseTime * 1000), 'h:mm a')}"></span></p>
+    <p>Sunset Time: <span th:text="${#dates.format(new java.util.Date(sunsetTime * 1000), 'h:mm a')}"></span></p>
+    <p>Weather Condition: <span th:text="${conditionMain}"></span> - <span th:text="${conditionDescription}"></span></p>
+    <img th:src="${conditionIcon}" alt="Weather Icon" th:if="${not #strings.isEmpty(conditionIcon)}">
+    </div>
+    <div th:if="${#lists.isEmpty(weather)}">
+      <p>No weather data found.</p>
+    </div>
+  </div>
+</div>
+</body>
+</html>
+
+
+
+
