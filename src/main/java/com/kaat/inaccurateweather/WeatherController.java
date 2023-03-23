@@ -71,10 +71,12 @@ public class WeatherController {
         }
 
         // Call GeolocateIPAddress method in WeatherService
-        String apikey = env.getProperty("ipstack");
-        zipCode = weatherService.GeolocateIPAddress(ipAddress, apikey);
+        if (zipCode == null || zipCode.isEmpty()) {
+            String apikey = env.getProperty("ipstack");
+            zipCode = weatherService.GeolocateIPAddress(ipAddress, apikey);
+        }
         // Log zipCode retrieval from ipaddress geolocation
-        logger.info("Retrieved zipCode=" + zipCode + " from ipaddress geolocation");
+        logger.info("Retrieved zipCode=" + zipCode + " from ipaddress geolocation or search");
 
         //save any zipCode we have. if we don't have a cookie zip or a geolocate zip we'll have to use a default.
         if (!zipCode.isEmpty() || zipCode != null){
