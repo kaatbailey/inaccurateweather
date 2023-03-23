@@ -42,7 +42,7 @@
   <h1>InAccurate Weather App</h1>
   <form th:action="@{/weather}" method="get" class="search">
     <label for="zipCode">Zip Code:</label>
-    <input type="text" id="zipCode" name="zipCode" required th:value="${zipCode}">
+    <input type="text" id="zipCode" name="zipCode" required th:value="${zipCode}" pattern="[0-9]{5}" title="Please enter a valid 5-digit zip code">
     <button type="submit">Search</button>
   </form>
   <div class="card">
