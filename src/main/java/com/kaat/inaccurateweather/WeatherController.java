@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.CookieValue;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.logging.Logger;
 
 @Controller
@@ -44,44 +46,41 @@ public class WeatherController {
         // Log request parameters
         logger.info("Received request for weather with zipCode=" + zipCode + " and jwt=" + jwt);
 
-        String ipAddress = "98.97.24.220";;//Generic place holder address if we can't get one.
+       AtomicReference<String> ipAddress = new AtomicReference<>("98.97.24.220");;//Generic place holder address if we can't get one.
 
         //if no zipCode we'll try to pick the last good search one up from jwt.
-        if (zipCode == null) {
-            if (jwt != null) {
-                zipCode = jwtService.getZipCodeFromToken(jwt);
-            }
-            if (zipCode != null) {
-                model.addAttribute("zipCode", zipCode);
-            }
+        Optional.ofNullable(zipCode)
+                .or(() -> Optional.ofNullable(jwt)
+                        .map(jwtService::getZipCodeFromToken))
+                .ifPresentOrElse(
+                        z -> {
+                            model.addAttribute("zipCode", z);
+                            logger.info("Retrieved zipCode=" + z + " from jwt or request parameters");
+                        },
+                        () -> {
+                            String requestAddress = request.getRemoteAddr();
+                            if (!requestAddress.equals("0:0:0:0:0:0:0:1")) {
+                                ipAddress.set(requestAddress);
+                            }
+                        }
+                );
 
-            // Log zipCode retrieval from jwt or request parameters
-            logger.info("Retrieved zipCode=" + zipCode + " from jwt or request parameters");
-
-
-            //if we don't have a zip rom jwt we'll try to get one via ipaddress to geolocation.
-            if (zipCode == null || zipCode.isEmpty()) {
-                // Get the user's IP address from the request
-              String requestAddress = request.getRemoteAddr();
-                //If we're testing on localhost we won't pick up the RemoteAddr, keep the default.
-                if (!requestAddress.equals("0:0:0:0:0:0:0:1")) {
-                    ipAddress = requestAddress;
-                }
-            }
-        }
 
         // Call GeolocateIPAddress method in WeatherService
-        if (zipCode == null || zipCode.isEmpty()) {
-            String apikey = env.getProperty("ipstack");
-            zipCode = weatherService.GeolocateIPAddress(ipAddress, apikey);
-        }
-        // Log zipCode retrieval from ipaddress geolocation
+        zipCode = Optional.ofNullable(zipCode)
+                .orElseGet(() -> {
+                    String apikey = env.getProperty("ipstack");
+                    return weatherService.GeolocateIPAddress(ipAddress.get(), apikey);
+                });
+
+// Log zipCode retrieval from ipaddress geolocation
         logger.info("Retrieved zipCode=" + zipCode + " from ipaddress geolocation or search");
 
-        //save any zipCode we have. if we don't have a cookie zip or a geolocate zip we'll have to use a default.
-        if (!zipCode.isEmpty() || zipCode != null){
+// Save any zipCode we have. If we don't have a cookie zip or a geolocate zip we'll have to use a default.
+        if (!zipCode.isEmpty() || zipCode != null) {
             String token = jwtService.createToken(zipCode);
-          }
+        }
+
 
         // Call IpaddressToLonLatConvert method in WeatherService
         OpenWeatherMapGeoResponse geoResponse = weatherService.IpaddressToLonLatConvert(zipCode, env.getProperty("openweathermap"));
