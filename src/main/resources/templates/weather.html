@@ -15,15 +15,12 @@
       border-radius: 5px;
       padding: 10px;
       margin: 10px;
-      max-width: 400px;
-      text-align: center;
+      max-width: 800px;
       font-size: 18px;
       font-family: Arial, sans-serif;
-    }
-
-    .card img {
-      max-width: 100px;
-      margin: 10px;
+      display: grid;
+      grid-template-columns: 1fr 2fr 1fr;
+      gap: 10px;
     }
 
     .card h2 {
@@ -31,10 +28,64 @@
       font-size: 24px;
     }
 
-    .card p {
-      margin: 10px 0;
+    .left-column {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      height: 100%;
     }
 
+    .left-column p {
+      margin: 5px;
+    }
+
+    .left-column img {
+      max-width: 100%;
+      height: 25%;
+    }
+
+    .left-column .weather-description {
+      margin-top: auto;
+      text-align: left;
+    }
+
+    .middle-column {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      text-align: center;
+    }
+
+    .middle-column p {
+      font-size: 38px;
+      margin: 0;
+    }
+
+    .right-column {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      text-align: left;
+    }
+
+    .right-column p {
+      margin: 5px;
+    }
+
+    @media screen and (max-width: 768px) {
+      .card {
+        max-width: 100%;
+        font-size: 14px;
+        grid-template-columns: 1fr;
+        text-align: left;
+      }
+
+      .left-column img {
+        height: 50%;
+      }
+    }
   </style>
 </head>
 <body>
@@ -46,23 +97,33 @@
     <button type="submit">Search</button>
   </form>
   <div class="card">
-    <p>Location: <span th:text="${name}"></span></p>
-    <p>Current Temperature: <span th:text="${temp}"></span></p>
-    <p>Feels Like: <span th:text="${feelsLike}"></span></p>
-    <p>Pressure: <span th:text="${pressure}"></span></p>
-    <p>Humidity: <span th:text="${humidity}"></span></p>
-    <p>Wind Speed: <span th:text="${windSpeed}"></span></p>
-    <p>Wind Direction: <span th:text="${windDirection}"></span></p>
-    <p>Visibility: <span th:text="${visibility}"></span></p>
-    <p>Cloudiness: <span th:text="${cloudiness}"></span></p>
-    <p>Latitude: <span th:text="${lat}"></span></p>
-    <p>Longitude: <span th:text="${lon}"></span></p>
-    <p>Sunrise Time: <span th:text="${#dates.format(new java.util.Date(sunriseTime * 1000), 'h:mm a')}"></span></p>
-    <p>Sunset Time: <span th:text="${#dates.format(new java.util.Date(sunsetTime * 1000), 'h:mm a')}"></span></p>
-    <p>Weather Condition: <span th:text="${conditionMain}"></span> - <span th:text="${conditionDescription}"></span></p>
-    <img th:src="${conditionIcon}" alt="Weather Icon" th:if="${not #strings.isEmpty(conditionIcon)}">
+    <div class="left-column">
+      <p>Current Weather</p>
+      <p><span th:text="${time}"></span></p>
+      <img th:src="${conditionIcon}" alt="Weather Icon" th:if="${not #strings.isEmpty(conditionIcon)}">
+      <p>Feels Like</p>
+      <p><span th:text="${feelsLike}"></span></p>
+      <p>Weather Description</p>
+      <p class="weather-description"><span th:text="${conditionDescription}"></span></p>
     </div>
-    <div th:if="${#lists.isEmpty(weather)}">
+    <div class="middle-column">
+      <p style="width: 20%; font-size: 38px; margin: 0;"><span th:text="${temp}"></span></p>
+    </div>
+    <div class="right-column">
+      <p>Location: <span th:text="${name}"></span></p>
+      <p>Pressure: <span th:text="${pressure}"></span></p>
+      <p>Humidity: <span th:text="${humidity}"></span></p>
+      <p>Wind Speed: <span th:text="${windSpeed}"></span></p>
+      <p>Wind Direction: <span th:text="${windDirection}"></span></p>
+      <p>Visibility: <span th:text="${visibility}"></span></p>
+      <p>Cloudiness: <span th:text="${cloudiness}"></span></p>
+      <p>Sunrise Time: <span th:text="${#dates.format(new java.util.Date(sunriseTime * 1000), 'h:mm a')}"></span></p>
+      <p>Sunset Time: <span th:text="${#dates.format(new java.util.Date(sunsetTime * 1000), 'h:mm a')}"></span></p>
+      <p>UV Index: <span th:text="${uvIndex}"></span></p>
+      <p>Dew Point: <span th:text="${dewPoint}"></span></p>
+      <p>Moon Phase: <span th:text="${moonPhase}"></span></p>
+    </div>
+      <div th:if="${#lists.isEmpty(weather)}">
       <p>No weather data found.</p>
     </div>
   </div>
