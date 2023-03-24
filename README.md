@@ -1,6 +1,9 @@
 # inaccurateweather
 This is a spring mvc weather application
 
+NOTE: In order to use this application you would have to have both Ipstack and OpenWeatherOrg API Keys in your ENV VARS.
+They are free for small use.
+
 This is a web application that displays weather data for a given zip code. It uses Spring Framework and makes RESTful API calls to fetch data from OpenWeatherMap API and ipstack API.
 
 The main class is WeatherController which is annotated with @Controller. It has a showWeather method that handles the GET requests for the URL "/weather". This method takes in Model object, HttpServletRequest object, and a @RequestParam annotated parameter for "zipCode" and a @CookieValue annotated parameter for "jwt" cookie. It uses these parameters to determine the location for which weather data is to be fetched.
