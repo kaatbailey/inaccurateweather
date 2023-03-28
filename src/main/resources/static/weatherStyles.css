@@ -1,0 +1,116 @@
+/*/* CSS styles for weather page */
+
+/* Zip code search */
+form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+label {
+    font-weight: bold;
+    margin-right: 5px;
+}
+
+#zipCode {
+    padding: 5px;
+    font-size: 16px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    margin-right: 5px;
+}
+
+button {
+    background-color: #007bff;
+    color: #fff;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+/* Weather card */
+.card {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    padding: 20px;
+    max-width: 800px;
+    margin: 0 auto;
+    margin-bottom: 20px;
+}
+
+.left-column {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-right: 20px;
+}
+
+.right-column {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    margin-left: 20px;
+}
+
+img {
+    width: 100px;
+    height: 100px;
+    margin-bottom: 10px;
+}
+
+p {
+    margin: 0;
+    text-align: center;
+    font-size: 16px;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: black;
+    font-size: 24px;
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+@media screen and (max-width: 768px) {
+    .card {
+        max-width: 100%;
+        font-size: 14px;
+        grid-template-columns: 1fr;
+        text-align: left;
+    }
+
+    .left-column {
+        margin-right: 0;
+        margin-bottom: 20px;
+    }
+
+    .right-column {
+        margin-left: 0;
+    }
+
+    .temperature{
+        justify-content: left;
+
+    }
+
+
+}
+
+

@@ -31,7 +31,9 @@ public class WeatherService {
         String ipstackUrl = "http://api.ipstack.com/" + ipaddress + "?access_key=" + env.getProperty("ipstack");
         IpstackResponse ipstackResponse = restTemplate.getForObject(ipstackUrl, IpstackResponse.class);
        String zipCode = ipstackResponse.getZip();
-       if (!zipCode.isEmpty() && zipCode!=null){
+       //MONTHLY USAGE LIMIT REACHED TEMP CODE
+        if(zipCode == null){zipCode = "45697";} //THIS IS TEMPORARY BECAUSE WE USE THE FREE VERSION OF IPSTACK AND OUR LIMIT IS IN EFFECT
+       if (zipCode!=null && !zipCode.isEmpty()){
            logger.info("GeolocateIPAddress returned zipCode={}" + zipCode);
            return zipCode;
        } else {
