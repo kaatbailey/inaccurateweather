@@ -1,4 +1,4 @@
-/*/* CSS styles for weather page */
+/* CSS styles for weather page */
 
 /* Zip code search */
 form {
@@ -62,16 +62,11 @@ button {
     margin-left: 20px;
 }
 
-img {
+.weather-icon {
     width: 100px;
     height: 100px;
     margin-bottom: 10px;
-}
-
-p {
-    margin: 0;
-    text-align: center;
-    font-size: 16px;
+    float: left;
 }
 
 body {
@@ -82,10 +77,14 @@ body {
     color: black;
     font-size: 24px;
 }
+.temperature{
+    font-size: 54px;
+}
 
-h1 {
+.header {
     text-align: center;
     margin-bottom: 20px;
+    font-size: 34px;
 }
 
 @media screen and (max-width: 768px) {
@@ -96,21 +95,47 @@ h1 {
         text-align: left;
     }
 
+    .temperature{
+        font-size: 27px;
+    }
+
     .left-column {
         margin-right: 0;
-        margin-bottom: 20px;
+        margin-bottom: 0px;
     }
 
     .right-column {
         margin-left: 0;
     }
 
-    .temperature{
-        justify-content: left;
-
+    .weather-icon {
+        width: 70px;
+        height: 70px;
     }
 
+    body {
+        font-size: 18px;
+    }
 
+    p {
+        font-size: 14px;
+    }
 }
+
+@media screen and (max-width: 480px) {
+    .weather-icon {
+        width: 50px;
+        height: 50px;
+    }
+
+    body {
+        font-size: 16px;
+    }
+
+    p {
+        font-size: 12px;
+    }
+}
+
 
 

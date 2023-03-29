@@ -13,7 +13,7 @@
 
 <body>
 <div>
-  <h1>InAccurate Weather App</h1>
+  <span class="header">InAccurate Weather App</span>
   <form th:action="@{/weather}" method="get">
     <label for="zipCode">Zip Code:</label>
     <input type="text" id="zipCode" name="zipCode" required th:value="${zipCode}">
@@ -23,33 +23,33 @@
 
   <div class="card">
     <div class="left-column">
-      <p>Location: <span th:text="${name}"></span></p>
-      <p>Current Weather:</p>
+      <span>Location: <span th:text="${name}"></span></span>
+      <span>Current Weather:</span>
       <div>
-        <img th:src="${conditionIcon}" alt="Weather Icon" th:if="${not #strings.isEmpty(conditionIcon)}">
+        <img class="weather-icon" th:src="${conditionIcon}" alt="Weather Icon" th:if="${not #strings.isEmpty(conditionIcon)}">
         <span class="temperature" th:text="${temp}"></span>
       </div>
-      <p><span th:text="${description}"></span></p>
-      <p>Feels Like: <span th:text="${feelsLike}"></span></p>
+      <span><span th:text="${description}"></span></span>
+      <span>Feels Like: <span th:text="${feelsLike}"></span></span>
     </div>
 
 
 
     <div class="right-column">
-      <p>Humidity: <span th:text="${humidity}"></span></p>
-      <p>Cloudiness: <span th:text="${cloudiness}"></span></p>
-      <p>Wind Speed: <span th:text="${windSpeed}"></span></p>
-      <p>Wind Direction: <span th:text="${windDirection}"></span></p>
-      <div style="margin-top: 20px;">
-        <p>Sunrise Time: <span th:text="${#dates.format(new java.util.Date(sunriseTime * 1000), 'h:mm a')}"></span></p>
-        <p>Sunset Time: <span th:text="${#dates.format(new java.util.Date(sunsetTime * 1000), 'h:mm a')}"></span></p>
-      </div>
+      <span>Humidity: <span th:text="${humidity}"></span></span>
+      <span>Cloudiness: <span th:text="${cloudiness}"></span></span>
+      <span>Wind Speed: <span th:text="${windSpeed}"></span></span>
+      <span>Wind Direction: <span th:text="${windDirection}"></span></span>
+<p></p>
+        <span>Sunrise Time: <span th:text="${#dates.format(new java.util.Date(sunriseTime * 1000), 'h:mm a')}"></span></span>
+        <span>Sunset Time: <span th:text="${#dates.format(new java.util.Date(sunsetTime * 1000), 'h:mm a')}"></span></span>
+
     </div>
   </div>
 </div>
 
   <div th:if="${#lists.isEmpty(weather)}">
-    <p>No weather data found.</p>
+    <span>No weather data found.</span>
   </div>
 </div>
 </div>
