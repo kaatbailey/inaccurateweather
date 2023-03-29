@@ -60,10 +60,10 @@ public class WeatherService {
     }
 
     //pass in lon and lat and get day of weather
-    public WeatherResponse GetWeatherFromLonLat(OpenWeatherMapGeoResponse geoResponse, String zipCode, String apikey){
+    public WeatherResponse GetWeatherFromLonLat(OpenWeatherMapGeoResponse geoResponse, String zipCode, String apikey, String unit){
         logger.info("GetWeatherFromLonLat called with geoResponse={}, and zipCode={} " + geoResponse + " " + zipCode);
-
-        String openWeatherMapUrl = "https://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid={apiKey}&units=imperial";
+        String units = unit;
+        String openWeatherMapUrl = "https://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid={apiKey}&units=" + units;
         // FOR A 5 DAY WE WOULD USE THE WORD FORCAST INSTEAD OF weather?lat etc.
         Map<String, String> forecastParams = new HashMap<>();
         forecastParams.put("lat", String.valueOf(geoResponse.getLat()));

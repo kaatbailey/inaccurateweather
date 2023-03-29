@@ -17,6 +17,8 @@
   <form th:action="@{/weather}" method="get">
     <label for="zipCode">Zip Code:</label>
     <input type="text" id="zipCode" name="zipCode" required th:value="${zipCode}">
+    <label for="celsius">Celsius</label>
+    <input type="checkbox" id="celsius" name="unit" value="metric">
     <button type="submit">Search</button>
   </form>
 </div>
@@ -28,7 +30,10 @@
       <div>
         <img class="weather-icon" th:src="${conditionIcon}" alt="Weather Icon" th:if="${not #strings.isEmpty(conditionIcon)}">
         <span class="temperature" th:text="${temp}"></span>
+        <span th:if="${unit == 'metric'}"> &deg;C</span>
+        <span th:if="${unit == 'imperial'}"> &deg;F</span>
       </div>
+
       <span><span th:text="${description}"></span></span>
       <span>Feels Like: <span th:text="${feelsLike}"></span></span>
     </div>

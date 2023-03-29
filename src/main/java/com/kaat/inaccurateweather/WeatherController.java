@@ -41,8 +41,9 @@ public class WeatherController {
 
     @GetMapping("/weather")
     public String showWeather(Model model, @RequestParam(value = "zipCode", required = false) String zipCode,
-                               @CookieValue(value = "jwt", required = false) String jwt,
-                               HttpServletRequest request) {
+                              @RequestParam(value = "unit", defaultValue = "imperial") String unit,
+                              @CookieValue(value = "jwt", required = false) String jwt,
+                              HttpServletRequest request) {
         // Log request parameters
         logger.info("Received request for weather with zipCode=" + zipCode + " and jwt=" + jwt);
 
@@ -78,15 +79,16 @@ public class WeatherController {
 
 // Save any zipCode we have. If we don't have a cookie zip or a geolocate zip we'll have to use a default.
         if (!zipCode.isEmpty() || zipCode != null) {
-            String token = jwtService.createToken(zipCode);
+            String token = jwtService.createToken(zipCode, unit); //OKAY UNIT NEEDS TO BE SET BEFORE THIS.
         }
 
+        model.addAttribute("unit", Optional.ofNullable(unit).orElse("imperial"));
 
         // Call IpaddressToLonLatConvert method in WeatherService
         OpenWeatherMapGeoResponse geoResponse = weatherService.IpaddressToLonLatConvert(zipCode, env.getProperty("openweathermap"));
 
         // Call GetWeatherFromLonLat method in WeatherService
-        WeatherResponse response = weatherService.GetWeatherFromLonLat(geoResponse, zipCode, env.getProperty("openweathermap"));
+        WeatherResponse response = weatherService.GetWeatherFromLonLat(geoResponse, zipCode, env.getProperty("openweathermap"), unit);
 
         List<WeatherResponse.Weather> weather = response.getList();
 // Extract specific data from the response

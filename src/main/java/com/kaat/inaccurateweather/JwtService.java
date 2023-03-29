@@ -16,13 +16,14 @@ public class JwtService {
     private static final String ISSUER = "InAccurateWeather";
     private static final int EXPIRATION_DAYS = 30;
 
-    public String createToken(String zipCode) {
+    public String createToken(String zipCode, String unit) {
         Instant now = Instant.now();
         Date issuedAt = Date.from(now);
         Date expiresAt = Date.from(now.plus(EXPIRATION_DAYS, ChronoUnit.DAYS));
 
         Claims claims = Jwts.claims().setSubject("user");
         claims.put("zipCode", zipCode);
+        claims.put("unit", unit);
 
         String token = Jwts.builder()
                 .setClaims(claims)
@@ -35,6 +36,9 @@ public class JwtService {
         return token;
     }
 
+
+
+
     public String getZipCodeFromToken(String token) {
         Claims claims = Jwts.parserBuilder()
                 .setSigningKey(SECRET_KEY)
@@ -46,4 +50,17 @@ public class JwtService {
 
         return zipCode;
     }
+
+    public String getUnitFromToken(String token) {
+        Claims claims = Jwts.parserBuilder()
+                .setSigningKey(SECRET_KEY)
+                .build()
+                .parseClaimsJws(token)
+                .getBody();
+
+        String unit = claims.get("unit", String.class);
+
+        return unit;
+    }
+
 }
