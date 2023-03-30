@@ -12,8 +12,8 @@
 
 
 <body>
+<img class="logo" src="/img/logo.png" alt="InAccurate Weather Logo">
 <div>
-  <span class="header">InAccurate Weather App</span>
   <form th:action="@{/weather}" method="get">
     <label for="zipCode">Zip Code:</label>
     <input type="text" id="zipCode" name="zipCode" required th:value="${zipCode}">

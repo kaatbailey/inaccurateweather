@@ -8,6 +8,10 @@ form {
     margin-top: 20px;
     margin-bottom: 20px;
 }
+.logo{
+    max-width: 60%;
+    min-width: 45%;
+}
 
 label {
     font-weight: bold;
@@ -95,6 +99,11 @@ body {
         text-align: left;
     }
 
+    .logo{
+        max-width: 45%;
+        min-width: 35%;
+    }
+
     .temperature{
         font-size: 27px;
     }
@@ -126,6 +135,11 @@ body {
     .weather-icon {
         width: 50px;
         height: 50px;
+    }
+
+    .logo{
+        max-width: 35%;
+        min-width: 30%;
     }
 
     body {
